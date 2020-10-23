@@ -445,7 +445,7 @@ int main(int argc, char *argv[])
     // Finally we print the summary of hits, misses, and evicts
     printSummary(cache.hits, cache.misses, cache.evicts);
 
-	// Clears the cache since we are finished with the simulation
+    // Clears the cache since we are finished with the simulation
     clearCache(cache);
 
     return 0;
