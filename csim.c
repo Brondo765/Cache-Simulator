@@ -15,17 +15,17 @@ typedef struct {
 	int S; 		// S = 2^s (Number of sets)
 	int B; 		// B = 2^b (Block size in bytes)
 	char *p;	// Policy for evictions
-	char *file; // Trace file we are testing our Csim on
+	char *file; 	// Trace file we are testing our Csim on
 
 } cache_makeup;
 
 /* Stores relative info about a line */
 typedef struct {
 
-	int valid; 				// Bit(s) represents whether cache is valid or not
+	int valid; 		// Bit(s) represents whether cache is valid or not
 	unsigned long long tag; // Tag which will be put into the cache if empty/to check for hits in line if valid
-	int num_accesses; 		// Count of number of times that line was accessed in the cache (replacement policy)
-	int timer;				// Timer is used for LFU evictions which keeps track of which line in the set hasn't been accessed in some time
+	int num_accesses; 	// Count of number of times that line was accessed in the cache (replacement policy)
+	int timer;		// Timer is used for LFU evictions which keeps track of which line in the set hasn't been accessed in some time
 
 } line_makeup;
 
@@ -41,9 +41,9 @@ typedef struct {
 typedef struct {
 
 	set_makeup *sets; 	// References the sets in the total cache
-	int hits;			// Number of cache hits (valid bit and tag in cache)
-	int misses;			// Number of misses (Tagged address not found in cache set line)
-	int evicts;			// Number of evictions (Removal based on policy)
+	int hits;		// Number of cache hits (valid bit and tag in cache)
+	int misses;		// Number of misses (Tagged address not found in cache set line)
+	int evicts;		// Number of evictions (Removal based on policy)
 	int set_count;		// Number of sets in cache
 	int line_count;		// Number of lines in the cache
 	int block_size;		// Total block size
@@ -91,30 +91,30 @@ void clearCache(cache_itself cache) {
 
 /* Finds the line with the smallest tag in the set for removal */
 int findSmallestTagIndex(set_makeup curr_set, cache_makeup parameters, cache_itself cache) {
-    unsigned long long min_tag_index = curr_set.lines[0].tag;
-    int index = 0;
-    int i;
-    for (i = 0; i < parameters.E; i++) {
-        if (min_tag_index > curr_set.lines[i].tag) {
-            min_tag_index = curr_set.lines[i].tag;
-            index = i;
-        }
-    }
-    return index;
+	unsigned long long min_tag_index = curr_set.lines[0].tag;
+    	int index = 0;
+    	int i;
+    	for (i = 0; i < parameters.E; i++) {
+        	if (min_tag_index > curr_set.lines[i].tag) {
+            	min_tag_index = curr_set.lines[i].tag;
+            	index = i;
+        	}
+    	}
+    	return index;
 }
 
 /* Finds the line with the largest tag in the set for removal */
 int findLargestTagIndex(set_makeup curr_set, cache_makeup parameters, cache_itself cache) {
-    unsigned long long max_tag_index = curr_set.lines[0].tag;
-    int index = 0;
-    int i;
-    for (i = 0; i < parameters.E; i++) {
-        if (max_tag_index < curr_set.lines[i].tag) {
-            max_tag_index = curr_set.lines[i].tag;
-            index = i;
-        }
+    	unsigned long long max_tag_index = curr_set.lines[0].tag;
+    	int index = 0;
+   	int i;
+    	for (i = 0; i < parameters.E; i++) {
+        	if (max_tag_index < curr_set.lines[i].tag) {
+            	max_tag_index = curr_set.lines[i].tag;
+            	index = i;
+        	}
 	}
-    return index;
+    	return index;
 }
 
 /* Finds the line who was least recently accesses in the set */
@@ -161,9 +161,9 @@ int findLeastFrequentlyUsedIndex(set_makeup curr_set, cache_makeup parameters, c
 		}
 
 		if (curr_set.lines[i].timer == second_LFU && curr_set.lines[i].timer == curr_LFU) {
-            third_encounter_index = i;
-            tag3 = curr_set.lines[i].tag;
-        }
+            		third_encounter_index = i;
+            		tag3 = curr_set.lines[i].tag;
+        	}
 	}
 	if (count == 1) {
 		if (tag1 > tag2) {
@@ -232,13 +232,13 @@ cache_itself runSimulation(unsigned long long address, cache_makeup parameters, 
 		
 	if (hit_flag == 0) {
 		if (empty_flag == 1) {
-        	// printf("MISS ");
-            set.lines[empty_index].num_accesses = 0;
+        		// printf("MISS ");
+           	 	set.lines[empty_index].num_accesses = 0;
 			set.lines[empty_index].timer = 0;
-            set.lines[empty_index].valid = 1;
-            set.lines[empty_index].tag = tag;
-            cache.misses++;
-        }
+            		set.lines[empty_index].valid = 1;
+            		set.lines[empty_index].tag = tag;
+            		cache.misses++;
+       		 }
 
 		else if (empty_flag == 0) {
 			cache.misses++;
@@ -246,16 +246,16 @@ cache_itself runSimulation(unsigned long long address, cache_makeup parameters, 
 			if (strcmp(parameters.p, "lru") == 0) {
 				// printf("MISS AND EVICT ");
 				evict_index = findLeastRecentlyUsedIndex(set, parameters, cache);
-                set.lines[evict_index].tag = tag;
+                		set.lines[evict_index].tag = tag;
 				set.lines[evict_index].num_accesses = 0;
 				set.lines[evict_index].timer = 0;
 
 			}
 			else if (strcmp(parameters.p, "lfu") == 0) {
-                // printf("MISS AND EVICT ");
+                		// printf("MISS AND EVICT ");
 				evict_index = findLeastFrequentlyUsedIndex(set, parameters, cache);
-                set.lines[evict_index].tag = tag;
-                set.lines[evict_index].num_accesses = 0;
+                		set.lines[evict_index].tag = tag;
+                		set.lines[evict_index].num_accesses = 0;
 				set.lines[evict_index].timer = 0;
 				
 			}
@@ -275,11 +275,10 @@ cache_itself runSimulation(unsigned long long address, cache_makeup parameters, 
 			}
 		} 
 	}
-
 	evict_index = 0;
-    empty_index = 0;
-    empty_flag = 0;
-    hit_flag = 0;
+    	empty_index = 0;
+    	empty_flag = 0;
+    	hit_flag = 0;
 	return cache;
 }
 
@@ -290,46 +289,47 @@ and the size of the request to the cache.
 cache_itself printFileTraceVerbose(cache_makeup parameters, cache_itself cache) {
 	char *file = parameters.file;
 	FILE *file_stream;
-    file_stream = fopen(file, "r");
+    	file_stream = fopen(file, "r");
 
-    if (file_stream == NULL) {
-        printf("Please make sure the file path is correct to create a stream.\n");
-    }
+    	if (file_stream == NULL) {
+        	printf("Please make sure the file path is correct to create a stream.\n");
+    	}
 
-    char operation;
-    unsigned long long address;
-    int size;
-    // %c = M, L, S
-    // %llx = Memory address
-    // %x = size
+    	char operation;
+    	unsigned long long address;
+    	int size;
+    	// %c = M, L, S
+    	// %llx = Memory address
+    	// %x = size
 	// The instruction or operation as I call it will be a space followed by a char, long long, and int
-    while (fscanf(file_stream, " %c %llx,%x", &operation, &address, &size) > 0) {
-        switch(operation) {
-		    case 'I':
+	while (fscanf(file_stream, " %c %llx,%x", &operation, &address, &size) > 0) {
+        	switch(operation) {
+		    	case 'I':
 				break;
 
-            case 'M':
-			 	cache = runSimulation(address, parameters, cache);
+            		case 'M':
+				cache = runSimulation(address, parameters, cache);
 			 	// printf("After first: M ");
 				cache = runSimulation(address, parameters, cache);
 				// printf("After second: ");
 			 	// printf("%c, %llx,%x\n", operation, address, size);
-                break;
+                		break;
 
-            case 'L':
+            		case 'L':
 				cache = runSimulation(address, parameters, cache);
 			 	// printf("%c, %llx,%x\n", operation, address, size);
-                break;
+                		break;
 
-            case 'S':
+            		case 'S':
 				cache = runSimulation(address, parameters, cache);
 				// printf("%c, %llx,%x\n", operation, address, size);
-                break;
+                		break;
 
-            default:
-                break;
-        }
-    }
+            		default:
+                		break;
+		}
+	}
+	
 	fclose(file_stream);
 	return cache;
 }
