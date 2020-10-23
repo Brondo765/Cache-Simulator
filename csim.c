@@ -52,8 +52,8 @@ typedef struct {
 
 /* Initilizes the cache based on command arg input and returns the cache back to main() */
 cache_itself makeCache(cache_makeup parameters, cache_itself cache) {
-    set_makeup set;
-    line_makeup line;
+    	set_makeup set;
+    	line_makeup line;
 
 	parameters.S = (1 << parameters.s);
 	parameters.B = (1 << parameters.b);
