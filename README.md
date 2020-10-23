@@ -14,11 +14,11 @@
 ## Check everything at once (this is the program that your instructor runs):
 - ./driver.py    
 
-# You will modifying and handing in these two files
+## You will modifying and handing in these two files
 - csim.c: *Your cache simulator*
 - aoat.c: *Your aoat function*
 
-# Tools for evaluating your simulator and aoat function
+## Tools for evaluating your simulator and aoat function
 - Makefile: *Builds the simulator and tools*
 - README: *This file*
 - driver.py*: *The driver program, runs test-csim and test-aoat*
