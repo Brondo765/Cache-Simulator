@@ -96,8 +96,8 @@ int findSmallestTagIndex(set_makeup curr_set, cache_makeup parameters, cache_its
     	int i;
     	for (i = 0; i < parameters.E; i++) {
         	if (min_tag_index > curr_set.lines[i].tag) {
-            	min_tag_index = curr_set.lines[i].tag;
-            	index = i;
+            		min_tag_index = curr_set.lines[i].tag;
+            		index = i;
         	}
     	}
     	return index;
@@ -110,8 +110,8 @@ int findLargestTagIndex(set_makeup curr_set, cache_makeup parameters, cache_itse
    	int i;
     	for (i = 0; i < parameters.E; i++) {
         	if (max_tag_index < curr_set.lines[i].tag) {
-            	max_tag_index = curr_set.lines[i].tag;
-            	index = i;
+            		max_tag_index = curr_set.lines[i].tag;
+            		index = i;
         	}
 	}
     	return index;
@@ -426,8 +426,8 @@ int main(int argc, char *argv[])
     }
 
     if (index_bits_flag == 0 || lines_per_set_flag == 0 || block_size_flag == 0 || p_flag == 0 || file_flag == 0) {
-        printf("Need all values to form a proper cache/check for correctness\n");
-		exit(EXIT_FAILURE);
+	printf("Need all values to form a proper cache/check for correctness\n");
+	exit(EXIT_FAILURE);
     }
 	    
     // Make the cache
