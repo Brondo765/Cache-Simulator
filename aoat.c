@@ -37,11 +37,11 @@ since this is an N X N matrix we can double our work when the row > col.
 						  sum += A[row][col] * A[col][row];
 					  } else if (row > col) {
 						  sum += 2 * (A[row][col] * A[col][row]); 
-            }
-          }
-        }
-      }
-    }
+					  }
+				  }
+			  }
+		 }
+	}
 /* 
 Specify exact matrix size of 64 X 64, go through and block each row/column
 by 4 and then go through those blocks performing their arithmetic values into sum
@@ -49,19 +49,18 @@ since this is an N X N matrix we can double our work when the row > col.
 */
   } else if (N == 64) {
   	for (row_block = 0; row_block < N; row_block += 4) {
-      for (col_block = 0; col_block < N; col_block += 4) {
-        for (row = row_block; row < N && row < row_block + 4; row++) {
-          for (col = col_block; col < N && col < col_block + 4; col++) {
-            if (row == col) {
-              sum += A[row][col] * A[col][row];
-            }
-            else if (row > col) {
-                 sum += 2 * (A[row][col] * A[col][row]);
-            }
-          }
-		    }
-      }
-    }
+      		for (col_block = 0; col_block < N; col_block += 4) {
+        		for (row = row_block; row < N && row < row_block + 4; row++) {
+          			for (col = col_block; col < N && col < col_block + 4; col++) {
+            				if (row == col) {
+              					sum += A[row][col] * A[col][row];
+					} else if (row > col) {
+                 				sum += 2 * (A[row][col] * A[col][row]);
+					}
+				}
+			}
+		}
+	}
 /* 
 Specify exact matrix size of 67 X 67, go through and block each row/column
 by 16 and then go through those blocks performing their arithmetic values into sum
@@ -69,21 +68,20 @@ since this is an N X N matrix we can double our work when the row > col.
 */
   } else if (N == 67) {
 	for (row_block = 0; row_block < N; row_block += 16) {
-     for (col_block = 0; col_block < N; col_block += 16) {
-       for (row = row_block; row < N && row < row_block + 16; row++) {
-         for (col = col_block; col < N && col < col_block + 16; col++) {
-           if (row == col) {
-             sum += A[row][col] * A[col][row];
-            }
-            else if (row > col) {
-              sum += 2 * (A[row][col] * A[col][row]);
-            }
-          }
-        }
-      }
-    }
+     		for (col_block = 0; col_block < N; col_block += 16) {
+       			for (row = row_block; row < N && row < row_block + 16; row++) {
+         			for (col = col_block; col < N && col < col_block + 16; col++) {
+           				if (row == col) {
+             					sum += A[row][col] * A[col][row];
+            				} else if (row > col) {
+              					sum += 2 * (A[row][col] * A[col][row]);
+					}
+				}
+			}
+		}
+	}
   }
-  return sum;
+ return sum;
 }
 
 
